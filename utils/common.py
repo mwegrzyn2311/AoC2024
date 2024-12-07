@@ -29,6 +29,18 @@ class Vector2:
     def is_parallel(self, other) -> bool:
         return (self.x == 0 and other.x == 0) or (self.y == 0 and other.y == 0)
 
+    def turn90right_simple(self):
+        if self == UP:
+            return RIGHT
+        elif self == RIGHT:
+            return DOWN
+        elif self == DOWN:
+            return LEFT
+        elif self == LEFT:
+            return UP
+        else:
+            return None
+
     def __add__(self, other):
         return Vector2(self.x + other.x, self.y + other.y)
 
@@ -114,10 +126,14 @@ class Vector3:
 
 class Map2:
     def __init__(self, items):
-        self.items = items
+        self.items = [item.strip('\n') for item in items]
 
     def __getitem__(self, vec2: Vector2):
         return self.items[vec2.y][vec2.x] if self.is_in_map(vec2) else None
+
+    def __setitem__(self, vec2: Vector2, new_val):
+        if self.is_in_map(vec2):
+            self.items[vec2.y] = self.items[vec2.y][:vec2.x] + new_val + self.items[vec2.y][vec2.x + 1:]
 
     def is_in_map(self, vec2: Vector2) -> bool:
         return 0 <= vec2.x < len(self.items[0]) and 0 <= vec2.y < len(self.items)
