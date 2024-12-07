@@ -58,8 +58,12 @@ UP: Vector2 = Vector2(0, -1)
 DOWN: Vector2 = Vector2(0, 1)
 LEFT: Vector2 = Vector2(-1, 0)
 RIGHT: Vector2 = Vector2(1, 0)
+UP_RIGHT: Vector2 = UP + RIGHT
+DOWN_RIGHT: Vector2 = DOWN + RIGHT
+DOWN_LEFT: Vector2 = DOWN + LEFT
+UP_LEFT: Vector2 = UP + LEFT
 NEIGH_DIRS: list[Vector2] = [UP, DOWN, LEFT, RIGHT]
-
+NEIGH_8_DIRS: list[Vector2] = [UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT]
 
 def vec_from_str(vec_str: str) -> Vector2:
     if vec_str in ('U', 'UP'):
@@ -108,6 +112,15 @@ class Vector3:
     def __repr__(self):
         return self.__str__()
 
+class Map2:
+    def __init__(self, items):
+        self.items = items
+
+    def __getitem__(self, vec2: Vector2):
+        return self.items[vec2.y][vec2.x] if self.is_in_map(vec2) else None
+
+    def is_in_map(self, vec2: Vector2) -> bool:
+        return 0 <= vec2.x < len(self.items[0]) and 0 <= vec2.y < len(self.items)
 
 UNIT_3_X = Vector3(1, 0, 0)
 UNIT_3_Y = Vector3(0, 1, 0)
