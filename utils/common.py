@@ -1,3 +1,5 @@
+from functools import cmp_to_key
+
 class Vector2:
     x: int
     y: int
@@ -70,6 +72,31 @@ class Vector2:
 
     def __repr__(self):
         return self.__str__()
+
+def vec2_vert_cmp(a: Vector2, b: Vector2) -> int:
+    if a.y > b.y:
+        return -1
+    elif a.y == b.y:
+        if a.x > b.x:
+            return 1
+        else:
+            return -1
+    else:
+        return 1
+
+def vec2_horiz_cmp(a: Vector2, b: Vector2) -> int:
+    if a.x > b.x:
+        return -1
+    elif a.x == b.x:
+        if a.y > b.y:
+            return 1
+        else:
+            return -1
+    else:
+        return 1
+
+vec2_vert_cmp_key = cmp_to_key(vec2_vert_cmp)
+vec2_horiz_cmp_key = cmp_to_key(vec2_horiz_cmp)
 
 
 UP: Vector2 = Vector2(0, -1)
