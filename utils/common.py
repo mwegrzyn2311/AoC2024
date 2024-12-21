@@ -168,6 +168,10 @@ class Map2:
         if self.is_in_map(vec2):
             self.items[vec2.y] = self.items[vec2.y][:vec2.x] + new_val + self.items[vec2.y][vec2.x + 1:]
 
+    def print_map(self):
+        for line in self.items:
+            print(line)
+
     def is_in_map(self, vec2: Vector2) -> bool:
         return 0 <= vec2.x < len(self.items[0]) and 0 <= vec2.y < len(self.items)
 
